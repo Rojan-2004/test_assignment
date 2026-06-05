@@ -18,13 +18,13 @@ class OnboardingViewModel extends StateNotifier<void> {
 
   Future<void> completeOnboarding(BuildContext context, {int initialLoginIndex = 0}) async {
     await _userSharedPrefs.setFirstTime(false);
-    
+
     if (!context.mounted) return;
 
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => LoginPage(initialIndex: initialLoginIndex),
+        builder: (context) => const LoginPage(),
       ),
     );
   }
