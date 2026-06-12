@@ -1,0 +1,4 @@
+module GoogleUtilities_Logger {
+umbrella "/Users/rojanmainali/Documents/hehe/aqua_life/build/ios/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/Logger/Public"
+export *
+}

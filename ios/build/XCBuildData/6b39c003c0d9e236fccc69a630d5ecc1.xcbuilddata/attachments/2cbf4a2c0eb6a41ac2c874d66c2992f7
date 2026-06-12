@@ -1,0 +1,4 @@
+module AppCheckCore {
+umbrella header "/Users/rojanmainali/Documents/hehe/aqua_life/build/ios/SourcePackages/checkouts/app-check/AppCheckCore/Sources/Public/AppCheckCore/AppCheckCore.h"
+export *
+}

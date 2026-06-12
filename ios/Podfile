@@ -1,8 +1,10 @@
-# Uncomment this line to define a global platform for your project
-# platform :ios, '13.0'
+platform :ios, '14.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
+
+# Disable Swift Package Manager until plugins support it
+ENV['DISABLE_SWIFT_PACKAGE_MANAGER'] = 'true'
 
 project 'Runner', {
   'Debug' => :debug,
@@ -39,5 +41,12 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
+
+    # Workaround for workmanager plugin UIScene lifecycle support
+    if target.name == 'workmanager_apple'
+      target.build_configurations.each do |config|
+        config.build_settings['ENABLE_APPLICATION_OBJECT_CONTEXT'] = 'YES'
+      end
+    end
   end
 end

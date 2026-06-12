@@ -1,0 +1,4 @@
+module permission_handler_apple {
+umbrella "/Users/rojanmainali/Documents/hehe/aqua_life/ios/Flutter/ephemeral/Packages/.packages/permission_handler_apple-9.4.9/Sources/permission_handler_apple/include"
+export *
+}

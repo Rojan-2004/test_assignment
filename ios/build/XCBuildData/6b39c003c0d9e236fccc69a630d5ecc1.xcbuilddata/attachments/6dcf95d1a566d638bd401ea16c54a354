@@ -1,0 +1,4 @@
+module sqflite_darwin {
+umbrella "/Users/rojanmainali/Documents/hehe/aqua_life/ios/Flutter/ephemeral/Packages/.packages/sqflite_darwin-2.4.3/Sources/sqflite_darwin/include"
+export *
+}

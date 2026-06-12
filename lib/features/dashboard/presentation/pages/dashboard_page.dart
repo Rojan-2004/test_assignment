@@ -1,82 +1,87 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:aqua_life/features/dashboard/presentation/view_model/dashboard_view_model.dart';
+import 'package:aqua_life/app/theme/app_theme.dart';
 import 'package:aqua_life/features/home/presentation/pages/home_page.dart';
-import 'package:aqua_life/app/theme/app_colors.dart';
+import 'package:flutter/material.dart';
 
-class DashboardPage extends ConsumerWidget {
+class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(dashboardViewModelProvider);
-    final viewModel = ref.read(dashboardViewModelProvider.notifier);
+  State<DashboardPage> createState() => _DashboardPageState();
+}
 
-    final List<Widget> pages = [
-      const HomePage(),
-      const Scaffold(
-        backgroundColor: Color(0xFF0A1628),
-        body: Center(child: Text("Connect View", style: TextStyle(color: Colors.white, fontSize: 18))),
-      ),
-      const Scaffold(
-        backgroundColor: Color(0xFF0A1628),
-        body: Center(child: Text("Jobs/Bag View", style: TextStyle(color: Colors.white, fontSize: 18))),
-      ),
-      const Scaffold(
-        backgroundColor: Color(0xFF0A1628),
-        body: Center(child: Text("Groups View", style: TextStyle(color: Colors.white, fontSize: 18))),
-      ),
-      const Scaffold(
-        backgroundColor: Color(0xFF0A1628),
-        body: Center(child: Text("Profile View", style: TextStyle(color: Colors.white, fontSize: 18))),
-      ),
-    ];
+class _DashboardPageState extends State<DashboardPage> {
+  int _currentIndex = 0;
 
+  final List<Widget> _pages = const [
+    HomeScreen(),
+    _PlaceholderPage(label: 'Shop', icon: Icons.store_outlined),
+    _PlaceholderPage(label: 'Assistant', icon: Icons.smart_toy_outlined),
+    _PlaceholderPage(label: 'Profile', icon: Icons.person_outline),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0A1628),
-      body: pages[state.currentIndex],
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          border: Border(
-            top: BorderSide(color: Color(0xFF1E3A5C), width: 1),
-          ),
+      backgroundColor: kBg,
+      body: _pages[_currentIndex],
+      bottomNavigationBar: _buildBottomNav(),
+    );
+  }
+
+  Widget _buildBottomNav() {
+    return BottomNavigationBar(
+      backgroundColor: kInput,
+      selectedItemColor: kAccent,
+      unselectedItemColor: kHint,
+      type: BottomNavigationBarType.fixed,
+      currentIndex: _currentIndex,
+      onTap: (i) => setState(() => _currentIndex = i),
+      items: const [
+        BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.store_outlined),
+          label: 'Shop',
         ),
-        child: BottomNavigationBar(
-          backgroundColor: const Color(0xFF112240),
-          currentIndex: state.currentIndex,
-          onTap: (index) => viewModel.updateCurrentIndex(index),
-          selectedItemColor: AppColors.primaryBlue,
-          unselectedItemColor: const Color(0xFF7AB8CC),
-          type: BottomNavigationBarType.fixed,
-          elevation: 0,
-          items: [
-            const BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            const BottomNavigationBarItem(
-              icon: Icon(Icons.person_add_outlined),
-              activeIcon: Icon(Icons.person_add),
-              label: 'Connect',
-            ),
-            const BottomNavigationBarItem(
-              icon: Icon(Icons.work_outline),
-              activeIcon: Icon(Icons.work),
-              label: 'Jobs',
-            ),
-            const BottomNavigationBarItem(
-              icon: Icon(Icons.group_outlined),
-              activeIcon: Icon(Icons.group),
-              label: 'Groups',
-            ),
-            BottomNavigationBarItem(
-              icon: CircleAvatar(
-                radius: 12,
-                backgroundColor: const Color(0xFF1E3A5C),
-                child: const Icon(Icons.person, size: 16, color: AppColors.primaryBlue),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.smart_toy_outlined),
+          label: 'Assistant',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person_outline),
+          label: 'Profile',
+        ),
+      ],
+    );
+  }
+}
+
+class _PlaceholderPage extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  const _PlaceholderPage({required this.label, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: kBg,
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, color: kAccent, size: 48),
+            const SizedBox(height: 12),
+            Text(
+              label,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
-              label: 'Profile',
+            ),
+            const SizedBox(height: 6),
+            const Text(
+              'Coming soon',
+              style: TextStyle(color: kSub, fontSize: 13),
             ),
           ],
         ),
